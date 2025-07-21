@@ -1,4 +1,4 @@
-📱 WhatsApp Chat Analyzer 💬 | by CampusX
+# 📱 WhatsApp Chat Analyzer 💬 
 An insightful data analysis project that dives deep into your WhatsApp group or personal chat history! This project processes .txt exports of chats and uncovers hidden patterns, statistics, and visualizations 📊 — helping you answer questions like:
 
 Who talks the most? 🗣️
@@ -11,7 +11,7 @@ How many messages, links, media, and deleted texts? 📎🖼️
 
 What’s the overall group vibe? 📈📉
 
-🚀 Features
+## 🚀 Features
 📂 Upload your exported .txt chat file
 
 📊 Auto-generated stats: total messages, media, links, deleted texts
@@ -22,17 +22,17 @@ What’s the overall group vibe? 📈📉
 
 📁 Clean and modular code based on CampusX’s ML projects
 
-🛠️ Built With
+## 🛠️ Built With
 Python, pandas, matplotlib, seaborn, Streamlit
 
 Preprocessing logic for both group and personal chats
 
-📌 How to Use
+## 📌 How to Use
 Export your chat from WhatsApp (.txt format)
 
 Upload the file in the Streamlit app
 
 Get instant visual insights!
 
-🧠 Inspiration
+## 🧠 Inspiration
 This project was built as part of the CampusX Data Science series, with added customization and interactivity.
