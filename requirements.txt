@@ -10,6 +10,4 @@ Pillow==10.4.0
 filelock==3.19.1
 idna==3.10
 requests==2.32.5
-docopt 
-yarg
-pipreqs
+
