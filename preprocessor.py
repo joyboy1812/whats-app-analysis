@@ -1,24 +1,31 @@
 import re
 import pandas as pd
 
+
 def preprocess(data):
     
-    pattern = '\d{1,2}/\d{1,2}/\d{2}, \d{1,2}:\d{2}(?:\s|\u202F)?[AP]M -'
-    pattern1 = '\d{1,2}/\d{1,2}/\d{2}, \d{1,2}:\d{2}'
+    split_pattern = r'\d{1,2}/\d{1,2}/\d{2}, \d{1,2}:\d{2}(?:\s|\u202F)?[AP]M -'
+    date_pattern = r'\d{1,2}/\d{1,2}/\d{2}, \d{1,2}:\d{2}(?:\s|\u202F)?[AP]M'
 
-    messages = re.split(pattern, data)[1:]
-    dates = re.findall(pattern1, data)
+    messages = re.split(split_pattern, data)[1:]
+    dates = re.findall(date_pattern, data)
+
+
+    dates = [d.replace('\u202F', ' ') for d in dates]
 
     df = pd.DataFrame({'user_message': messages, 'message_date': dates})
-    # convert message_date type
-    df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M')
+    
+    df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %I:%M %p', errors='coerce')
+    if df['message_date'].isna().any():
+        retry = df.loc[df['message_date'].isna(), 'message_date'].str.replace('  ', ' ', regex=False)
+        df.loc[df['message_date'].isna(), 'message_date'] = pd.to_datetime(retry, format='%m/%d/%y, %I:%M %p', errors='coerce')
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
     users = []
     messages = []
     for message in df['user_message']:
-        entry = re.split('([\w\W]+?):\s', message)
+        entry = re.split(r'([\w\W]+?):\s', message)
         if entry[1:]:  # user name
             users.append(entry[1])
             messages.append(" ".join(entry[2:]))
